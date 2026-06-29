@@ -17,6 +17,7 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.notemoon.alarm.presentation.navigation.alarmGraph
 import com.example.notemoon.calendar.presentation.navigation.calendarGraph
 import com.example.notemoon.home.presentation.navigation.HOME_ROUTE
 import com.example.notemoon.home.presentation.navigation.homeGraph
@@ -91,6 +92,7 @@ fun MainScreen(
             tasksGraph(navController)
             notesGraph(navController)
             toolsGraph(navController)
+            alarmGraph(navController)
             settingsGraph(navController)
         }
     }

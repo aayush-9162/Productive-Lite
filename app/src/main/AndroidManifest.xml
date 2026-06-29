@@ -14,6 +14,9 @@
     <!-- Lets the user exempt the app from battery optimization so reminders are
          not deferred/dropped while the app is closed (OEM App Standby / Doze). -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Alarm: full-screen ringing screen over the lock screen + wake lock. -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- Tools: QR/barcode scanner + timer vibration -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -56,6 +59,37 @@
              when the device restarts, so this re-arms them from the database. -->
         <receiver
             android:name=".tasks.reminder.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Full-screen alarm screen, shown (even over the lock screen) by the
+             firing notification's full-screen intent. Its own task, hidden from
+             recents. -->
+        <activity
+            android:name=".alarm.presentation.ring.AlarmRingActivity"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:taskAffinity=".alarm.ring"
+            android:theme="@style/Theme.NoteMoon" />
+
+        <!-- Fires when an alarm goes off (started by setAlarmClock) and handles
+             its Dismiss/Snooze actions. Triggered explicitly, so not exported. -->
+        <receiver
+            android:name=".alarm.receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Re-arms alarms after a reboot or app update (the OS clears them). -->
+        <receiver
+            android:name=".alarm.receiver.AlarmBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

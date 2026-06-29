@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.Cake
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Casino
@@ -38,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.notemoon.alarm.presentation.navigation.AlarmDestinations
 import com.example.notemoon.tools.presentation.navigation.ToolsDestinations
 
 private data class Tool(
@@ -51,6 +53,7 @@ private data class Tool(
 @Composable
 fun ToolsScreen(onOpenTool: (String) -> Unit) {
     val tools = listOf(
+        Tool("Alarm", "Wake-up alarms with snooze", Icons.Filled.Alarm, AlarmDestinations.ALARM_LIST),
         Tool("Standard calculator", "Everyday arithmetic", Icons.Filled.Calculate, ToolsDestinations.STANDARD_CALCULATOR),
         Tool("SIP calculator", "Project investment growth", Icons.Filled.Savings, ToolsDestinations.SIP_CALCULATOR),
         Tool("EMI calculator", "Loan instalments & interest", Icons.Filled.Payments, ToolsDestinations.EMI_CALCULATOR),
